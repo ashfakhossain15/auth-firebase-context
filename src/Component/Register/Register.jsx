@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../AuthProviders/AuthProviders";
+import { toast } from "react-hot-toast";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [success, setSuccess] = useState("");
   const [isChecked, setIsChecked] = useState(false);
   const { createUser } = useContext(AuthContext);
 
@@ -36,9 +38,13 @@ const Register = () => {
         const loggedUser = result.user;
         console.log(loggedUser);
         e.target.reset();
+        toast.success("User Created Success");
+
+        setSuccess("User created successfully");
       })
       .catch((error) => {
         console.log(error.message);
+        setSuccess("");
       });
   };
 
@@ -128,6 +134,7 @@ const Register = () => {
             Register
           </button>
         </div>
+        {success && success}
       </form>
     </div>
   );

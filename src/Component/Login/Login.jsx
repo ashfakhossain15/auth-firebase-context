@@ -3,6 +3,7 @@ import { getAuth } from "firebase/auth";
 import app from "../../../Firebase/firebase.init";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../AuthProviders/AuthProviders";
+import { toast } from "react-hot-toast";
 
 const auth = getAuth(app);
 const Login = () => {
@@ -23,9 +24,13 @@ const Login = () => {
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        e.target.email.value = "";
+        e.target.value = '';
+        toast.success("Login successful");
       })
       .catch((error) => {
         console.log(error.message);
+        toast.error("Password or email incorrect");
       });
   };
   const handleEmailChange = (e) => {
